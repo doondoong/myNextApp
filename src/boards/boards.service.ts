@@ -35,6 +35,23 @@ export class BoardsService {
     }
   }
 
+  // 특정 게시물 상태 변경하기
+  async updateBoardStatus(id: number, status: BoardStatus): Promise<Board> {
+    // type A
+    // this.boards.find((board) => board.id === id).status = status;
+    // type B (리턴이 필요할때)
+    const board = await this.getBoardById(id);
+    board.status = status;
+    await this.boardRepository.save(board);
+
+    return board;
+  }
+
+  // 전체 게시물 가져오기
+  async getAllBoards(): Promise<Board[]> {
+    return this.boardRepository.find();
+  }
+
   // // 전체 게시물 가져오기
   // getAllBoards(): Board[] {
   //   return this.boards;
